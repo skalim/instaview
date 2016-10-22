@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    tools:context="saad.com.instaview.SearchActivity"
+    android:orientation="vertical"
+    >
+
+    <EditText
+        android:id="@+id/search_activity_search_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/search_activity_button_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_search_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
+    <com.veinhorn.scrollgalleryview.ScrollGalleryView
+        android:id="@+id/activity_search_scroll_gallery_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000"/>
+
+</LinearLayout>
