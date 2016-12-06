@@ -1,2 +1,2 @@
 # InstaView
-https://skalim.github.io/InstaView/
+https://skalim.github.io/instaview/
