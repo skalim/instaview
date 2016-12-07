@@ -3,9 +3,6 @@ package saad.com.instaview;
 import org.jinstagram.Instagram;
 import org.jinstagram.auth.model.Token;
 
-/**
- * Created by kalsa12 on 2016-10-20.
- */
 
 public class MyInstagram {
 

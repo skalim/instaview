@@ -16,9 +16,6 @@ import org.jinstagram.exceptions.InstagramException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kalsa12 on 2016-10-20.
- */
 
 public class FetchPicturesTask extends AsyncTask<String, Void, ArrayList<String>> {
 
