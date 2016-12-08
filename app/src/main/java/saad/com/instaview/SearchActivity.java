@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(  intent != null){
             Uri uri = intent.getData();
-            String accessToken = uri.toString().replace(AuthorisationManager.REDIRECT_URI + "#access_token=", "");
+            String accessToken = uri.toString().replace(InstaViewConsts.REDIRECT_URI + "#access_token=", "");
             MyInstagram.init(new Token(accessToken, ""));
         }
 

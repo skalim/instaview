@@ -6,22 +6,17 @@ import android.content.Intent;
 import android.net.Uri;
 
 public class AuthorisationManager {
-    private static final String AUTHORIZATION_URL = "https://api.instagram.com/oauth/authorize";
-    private static final String CLIENT_ID = "6d531664f106445e9a4af197073f99e9";
-    private static final String CLIENT_SECRET = "289550a757e9455a82b09ebd148f954f";
-    public static final String REDIRECT_URI = "https://skalim.github.io/instaview";
-    private static final String SCOPE = "public_content";
 
     /**
      *
      * @param context
      */
     public static void startAuthorisation(Context context) {
-        String authUrl = AUTHORIZATION_URL
-                + "/?client_id=" + CLIENT_ID
-                + "&redirect_uri=" + REDIRECT_URI
+        String authUrl = InstaViewConsts.AUTHORIZATION_URL
+                + "/?client_id=" + InstaViewConsts.CLIENT_ID
+                + "&redirect_uri=" + InstaViewConsts.REDIRECT_URI
                 + "&response_type=token"
-                + "&scope=" + SCOPE;
+                + "&scope=" + InstaViewConsts.SCOPE;
 
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(authUrl));
