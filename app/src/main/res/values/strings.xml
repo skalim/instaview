@@ -2,6 +2,7 @@
     <string name="app_name">InstaView</string>
 
     <string-array name="background_images">
+        <item>https://c2.staticflickr.com/6/5652/30258177784_3835b4680a_z.jpg</item>
         <item>https://c2.staticflickr.com/6/5715/30441262891_d7fe696ce2.jpg</item>
         <item>https://c2.staticflickr.com/6/5463/30150493163_5e92a79817.jpg</item>
         <item>https://c2.staticflickr.com/6/5785/30853989825_4ff1f18904.jpg</item>

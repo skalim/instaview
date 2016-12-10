@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main_content_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="saad.com.instaview.MainActivity">
+    tools:context="saad.com.instaview.MainActivity"
+    >
 
     <ImageView
         android:id="@+id/activity_main_image_view_background"
+        style="@style/BackroundImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="ContentDescription"
-        style="@style/BackroundImageView"
-        />
+        tools:ignore="ContentDescription" />
 
-    <mehdi.sakout.fancybuttons.FancyButton
-        android:id="@+id/activity_main_login_button"
+    <TextView
+        fontPath="fonts/Title.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        fancy:fb_borderColor="#FFFFFF"
-        fancy:fb_borderWidth="1dp"
-        fancy:fb_defaultColor="#7ab800"
-        fancy:fb_focusColor="#9bd823"
-        fancy:fb_iconPosition="left"
-        fancy:fb_radius="30dp"
-        fancy:fb_text="Sign in with Instagram"
-        fancy:fb_textColor="#FFFFFF"
-        android:layout_gravity="center"
-        />
+        android:layout_marginBottom="10dp"
+        android:text="@string/app_name"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        tools:ignore="MissingPrefix"
+        android:layout_centerInParent="true"
+        android:id="@+id/activity_main_title" />
 
-</FrameLayout>
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:clickable="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/button_instagram"
+        tools:ignore="ContentDescription"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/activity_main_button_instagram" />
+
+
+</RelativeLayout>
 
 
