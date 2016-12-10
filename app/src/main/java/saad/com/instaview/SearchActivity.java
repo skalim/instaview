@@ -34,6 +34,8 @@ public class SearchActivity extends AppCompatActivity {
 
     @BindView(R.id.activity_search_scroll_gallery_view)
     ScrollGalleryView scrollGalleryView;
+    @BindView(R.id.swiping_view)
+    SwipingImagesView swipingImagesView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +44,15 @@ public class SearchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        if(  intent != null){
+        if(  intent != null ){
             Uri uri = intent.getData();
-            String accessToken = uri.toString().replace(InstaViewConsts.REDIRECT_URI + "#access_token=", "");
-            MyInstagram.init(new Token(accessToken, ""));
+            if( uri != null ){
+                String accessToken = uri.toString();
+                if( accessToken != null ){
+                    accessToken = accessToken.replace(InstaViewConsts.REDIRECT_URI + "#access_token=", "");
+                    MyInstagram.init(new Token(accessToken, ""));
+                }
+            }
         }
 
         mRecyclerView.setHasFixedSize(true);
@@ -55,6 +62,11 @@ public class SearchActivity extends AppCompatActivity {
 
         mAdapter = new PicturesAdapter(new ArrayList<String>(), this);
         mRecyclerView.setAdapter(mAdapter);
+
+        ArrayList<String> paths = new ArrayList<>();
+        paths.add("https://c2.staticflickr.com/6/5715/30441262891_d7fe696ce2.jpg");
+        paths.add("https://c2.staticflickr.com/6/5463/30150493163_5e92a79817.jpg");
+        swipingImagesView.setImagePaths(paths);
     }
 
     @OnClick(R.id.search_activity_button_search)
