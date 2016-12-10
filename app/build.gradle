@@ -39,4 +39,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.1'
     compile 'com.veinhorn.scrollgalleryview:library:1.0.5'
     //compile 'net.openid:appauth:0.4.1'
+    compile 'io.github.skalim:saads-android:0.2.1'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 }
