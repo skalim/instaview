@@ -2,10 +2,6 @@ package saad.com.instaview;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
 
 import org.jinstagram.Instagram;
 import org.jinstagram.entity.common.ImageData;
@@ -39,7 +35,6 @@ public class FetchPicturesTask extends AsyncTask<String, Void, ArrayList<String>
             Instagram instagram = MyInstagram.getInstance();
             TagMediaFeed tagMediaFeed = instagram.getRecentMediaTags(params[0]);
             List<MediaFeedData> mediaFeed = tagMediaFeed.getData();
-            Log.d(TAG, "Fetched " + mediaFeed.size() + " pictures");
             for( MediaFeedData mediaFeedData : mediaFeed ){
                 ImageData imageData = mediaFeedData.getImages().getStandardResolution();
                 list.add(imageData.getImageUrl());
@@ -54,6 +49,6 @@ public class FetchPicturesTask extends AsyncTask<String, Void, ArrayList<String>
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         super.onPostExecute(strings);
-        ((SearchActivity) context).onPicturesFetched(strings);
+        ((SearchActivity) context).swipingImagesView.addImagePaths(strings);
     }
 }
