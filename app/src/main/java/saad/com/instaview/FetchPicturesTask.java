@@ -2,10 +2,6 @@ package saad.com.instaview;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
 
 import org.jinstagram.Instagram;
 import org.jinstagram.entity.common.ImageData;
@@ -53,6 +49,6 @@ public class FetchPicturesTask extends AsyncTask<String, Void, ArrayList<String>
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         super.onPostExecute(strings);
-        ((SearchActivity) context).swipingImagesView.setImagePaths(strings);
+        ((SearchActivity) context).swipingImagesView.addMoreImagePaths(strings);
     }
 }

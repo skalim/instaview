@@ -2,6 +2,7 @@ package saad.com.instaview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -20,15 +21,15 @@ import java.util.ArrayList;
 
 public class SwipingImagesView extends FrameLayout implements Animation.AnimationListener {
 
-    interface OnSwipeListener{
+    interface OnSwipeListener {
         void onSwipeRight(int pos);
+
         void onSwipeLeft(int pos);
     }
 
     private float thresholdRightX;
     private float thresholdLeftX;
 
-    private TextView emptyTextView;
     private ImageView imageViewForeground, imageViewBackground;
     private View emptyView;
     private ArrayList<String> imagePaths;
@@ -65,7 +66,8 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
         imageViewBackground.setLayoutParams(layoutParams);
         imageViewForeground.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageViewBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        emptyTextView = new TextView(getContext());
+        emptyView = new TextView(getContext());
+        TextView emptyTextView = (TextView) emptyView;
         emptyTextView.setText("No images to show");
         emptyTextView.setTextSize(20);
         emptyTextView.setVisibility(INVISIBLE);
@@ -224,40 +226,48 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
 
     }
 
-    private void loadNextImage(){
+    private void loadNextImage() {
         String url = getNextUrl();
         Picasso.with(getContext()).load(url).into(imageViewBackground);
-        if( url == null ){
-            if( emptyView != null ){
-                emptyView.setVisibility(VISIBLE);
-            } else {
-                emptyTextView.setVisibility(VISIBLE);
-            }
+        if (url == null) {
+            emptyView.setVisibility(VISIBLE);
+        } else {
+            emptyView.setVisibility(INVISIBLE);
         }
     }
 
-    private String getNextUrl(){
-        if( imagePaths.isEmpty() ){
+    private String getNextUrl() {
+        if (imagePaths.isEmpty()) {
             return null;
         }
 
         return imagePaths.remove(0);
     }
 
-    public void setImagePaths(ArrayList<String> imagePaths) {
+    public void initImagePaths(ArrayList<String> imagePaths) {
         this.imagePaths = imagePaths;
         Picasso.with(getContext()).load(getNextUrl()).into(imageViewForeground);
         Picasso.with(getContext()).load(getNextUrl()).into(imageViewBackground);
+    }
+
+    public void addMoreImagePaths(ArrayList<String> imagePaths) {
+        for (String url : imagePaths) {
+            this.imagePaths.add(url);
+        }
+
+        if( emptyView.getVisibility() == VISIBLE ) {
+            this.onAnimationEnd(null);
+        }
     }
 
     public void setOnSwipeListener(OnSwipeListener onSwipeListener) {
         this.onSwipeListener = onSwipeListener;
     }
 
-    public void setEmptyView(View emptyView) {
+    public void setEmptyView(@NonNull View emptyView) {
+        removeView(this.emptyView);
         this.emptyView = emptyView;
         addView(this.emptyView);
-        removeView(this.emptyTextView);
         this.emptyView.setVisibility(INVISIBLE);
     }
 }

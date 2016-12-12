@@ -4,20 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.veinhorn.scrollgalleryview.MediaInfo;
-import com.veinhorn.scrollgalleryview.ScrollGalleryView;
 
 import org.jinstagram.auth.model.Token;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +47,7 @@ public class SearchActivity extends AppCompatActivity {
         for (String url: urlArray) {
             paths.add(url);
         }
-        swipingImagesView.setImagePaths(paths);
+        swipingImagesView.initImagePaths(paths);
     }
 
     @OnClick(R.id.search_activity_button_search)
