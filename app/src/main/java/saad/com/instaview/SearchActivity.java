@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.veinhorn.scrollgalleryview.MediaInfo;
 import com.veinhorn.scrollgalleryview.ScrollGalleryView;
@@ -63,9 +66,11 @@ public class SearchActivity extends AppCompatActivity {
         mAdapter = new PicturesAdapter(new ArrayList<String>(), this);
         mRecyclerView.setAdapter(mAdapter);
 
+        String[] urlArray = getResources().getStringArray(R.array.background_images);
         ArrayList<String> paths = new ArrayList<>();
-        paths.add("https://c2.staticflickr.com/6/5715/30441262891_d7fe696ce2.jpg");
-        paths.add("https://c2.staticflickr.com/6/5463/30150493163_5e92a79817.jpg");
+        for (String url: urlArray) {
+            paths.add(url);
+        }
         swipingImagesView.setImagePaths(paths);
     }
 
