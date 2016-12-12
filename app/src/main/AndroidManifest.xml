@@ -15,8 +15,10 @@
         <activity android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             >
-
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".SearchActivity">
@@ -27,10 +29,6 @@
                 <data android:scheme="https"
                     android:host="skalim.github.io"
                     android:path="/instaview"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 <!--

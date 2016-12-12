@@ -39,27 +39,12 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         }
-
-        String[] urlArray = getResources().getStringArray(R.array.background_images);
-        ArrayList<String> paths = new ArrayList<>();
-        for (String url: urlArray) {
-            paths.add(url);
-        }
-        swipingImagesView.addImagePaths(paths);
     }
 
     @OnClick(R.id.search_activity_button_search)
     public void onSearch(){
-        String[] urlArray = getResources().getStringArray(R.array.background_images);
-        ArrayList<String> paths = new ArrayList<>();
-        for (String url: urlArray) {
-            paths.add(url);
-        }
-        swipingImagesView.addImagePaths(paths);
-        /*
-        swipingImagesView.addImagePaths(paths);
         String tag = editTextSearch.getText().toString();
         FetchPicturesTask fetchPicturesTask = new FetchPicturesTask(this);
-        fetchPicturesTask.execute(tag);*/
+        fetchPicturesTask.execute(tag);
     }
 }
