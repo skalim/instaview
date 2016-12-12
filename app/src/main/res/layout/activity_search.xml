@@ -19,29 +19,12 @@
         android:id="@+id/search_activity_button_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search"
+        android:text="@string/search"
         />
 
     <saad.com.instaview.SwipingImagesView
         android:id="@+id/swiping_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/activity_search_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        />
-
-    <com.veinhorn.scrollgalleryview.ScrollGalleryView
-        android:id="@+id/activity_search_scroll_gallery_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000"
-        android:visibility="gone"
-        />
 
 </LinearLayout>

@@ -79,8 +79,8 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
                 .getDefaultDisplay()
                 .getMetrics(displaymetrics);
         screenWidth = displaymetrics.widthPixels;
-        thresholdRightX = screenWidth - 100f;
-        thresholdLeftX = 100f;
+        thresholdRightX = screenWidth - 200f;
+        thresholdLeftX = 200f;
     }
 
     @Override
