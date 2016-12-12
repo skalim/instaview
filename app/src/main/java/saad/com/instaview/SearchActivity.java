@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.jinstagram.auth.model.Token;
 
@@ -47,13 +45,21 @@ public class SearchActivity extends AppCompatActivity {
         for (String url: urlArray) {
             paths.add(url);
         }
-        swipingImagesView.initImagePaths(paths);
+        swipingImagesView.addImagePaths(paths);
     }
 
     @OnClick(R.id.search_activity_button_search)
     public void onSearch(){
+        String[] urlArray = getResources().getStringArray(R.array.background_images);
+        ArrayList<String> paths = new ArrayList<>();
+        for (String url: urlArray) {
+            paths.add(url);
+        }
+        swipingImagesView.addImagePaths(paths);
+        /*
+        swipingImagesView.addImagePaths(paths);
         String tag = editTextSearch.getText().toString();
         FetchPicturesTask fetchPicturesTask = new FetchPicturesTask(this);
-        fetchPicturesTask.execute(tag);
+        fetchPicturesTask.execute(tag);*/
     }
 }

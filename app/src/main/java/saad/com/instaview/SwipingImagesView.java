@@ -36,7 +36,7 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
 
     private int screenWidth, currentItemIndex;
     private float startX, startY, currentX, currentY, dx, degreesToRotate, alpha;
-    private boolean isSwiping, swipedOut;
+    private boolean isSwiping, swipedOut, showingLastImage;
     private OnSwipeListener onSwipeListener;
 
     public SwipingImagesView(Context context) {
@@ -57,6 +57,7 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
     private void init() {
         isSwiping = false;
         swipedOut = false;
+        showingLastImage = false;
         currentItemIndex = 0;
         imagePaths = new ArrayList<>();
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -70,7 +71,6 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
         TextView emptyTextView = (TextView) emptyView;
         emptyTextView.setText("No images to show");
         emptyTextView.setTextSize(20);
-        emptyTextView.setVisibility(INVISIBLE);
         emptyTextView.setGravity(Gravity.CENTER);
         addView(emptyTextView);
         addView(imageViewBackground);
@@ -213,6 +213,12 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
 
     @Override
     public void onAnimationEnd(Animation animation) {
+        if (showingLastImage) {
+            showingLastImage = false;
+            emptyView.setVisibility(VISIBLE);
+        } else {
+            emptyView.setVisibility(INVISIBLE);
+        }
         imageViewBackground.bringToFront();
         invalidate();
         swapImageViews();
@@ -230,8 +236,10 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
         String url = getNextUrl();
         Picasso.with(getContext()).load(url).into(imageViewBackground);
         if (url == null) {
+            showingLastImage = true;
             emptyView.setVisibility(VISIBLE);
         } else {
+            showingLastImage = false;
             emptyView.setVisibility(INVISIBLE);
         }
     }
@@ -244,18 +252,16 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
         return imagePaths.remove(0);
     }
 
-    public void initImagePaths(ArrayList<String> imagePaths) {
-        this.imagePaths = imagePaths;
-        Picasso.with(getContext()).load(getNextUrl()).into(imageViewForeground);
-        Picasso.with(getContext()).load(getNextUrl()).into(imageViewBackground);
-    }
-
-    public void addMoreImagePaths(ArrayList<String> imagePaths) {
+    public void addImagePaths(@NonNull ArrayList<String> imagePaths) {
         for (String url : imagePaths) {
             this.imagePaths.add(url);
         }
 
-        if( emptyView.getVisibility() == VISIBLE ) {
+        if (showingLastImage) {
+            Picasso.with(getContext()).load(getNextUrl()).into(imageViewBackground);
+        } else if (emptyView.getVisibility() == VISIBLE) {
+            // No images are shown
+            Picasso.with(getContext()).load(getNextUrl()).into(imageViewBackground);
             this.onAnimationEnd(null);
         }
     }
