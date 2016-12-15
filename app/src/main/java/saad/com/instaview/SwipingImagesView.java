@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -87,6 +88,11 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if( imageViewForeground.getAnimation() != null && !imageViewForeground.getAnimation().hasEnded() ){
+            // Ignore touch events if animation is playing
+            return false;
+        }
+
         boolean toReturn;
         switch (event.getAction()) {
             case (MotionEvent.ACTION_DOWN):
@@ -140,9 +146,13 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
     }
 
     private void resetImage() {
-        imageViewForeground.setX(0);
-        imageViewForeground.setRotation(0);
-        imageViewForeground.setAlpha(1f);
+        // Animate image to default position
+        imageViewForeground.animate()
+                .translationX(0f)
+                .rotation(0)
+                .alpha(1)
+                .setDuration(400)
+                .setInterpolator(new DecelerateInterpolator()).start();
     }
 
     private void resetAll() {
@@ -179,7 +189,6 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
         Animation animation = new TranslateAnimation(imageViewForeground.getX(),
                 screenWidth, imageViewForeground.getY(), imageViewForeground.getY());
         animation.setDuration(400);
-        //animation.setFillAfter(true);
         animation.setAnimationListener(this);
         imageViewForeground.startAnimation(animation);
         if (onSwipeListener != null) {
@@ -192,7 +201,6 @@ public class SwipingImagesView extends FrameLayout implements Animation.Animatio
         Animation animation = new TranslateAnimation(imageViewForeground.getX(),
                 -screenWidth, imageViewForeground.getY(), imageViewForeground.getY());
         animation.setDuration(400);
-        //animation.setFillAfter(true);
         animation.setAnimationListener(this);
         imageViewForeground.startAnimation(animation);
         if (onSwipeListener != null) {
