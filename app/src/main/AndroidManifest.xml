@@ -15,16 +15,15 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
             android:name=".SearchActivity"
             android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -39,10 +38,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/search_pics"
-                />
+                android:resource="@xml/search_pics" />
         </activity>
         <!--
                 <activity
@@ -59,7 +58,8 @@
                 </activity>
                 -->
 
-        <provider android:name=".TagSearchRecentSuggestionsProvider"
+        <provider
+            android:name=".TagSearchRecentSuggestionsProvider"
             android:authorities="saad.com.instaview.TagSearchRecentSuggestionsProvider" />
 
     </application>

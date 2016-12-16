@@ -27,20 +27,24 @@ public class FetchPicturesTask extends AsyncTask<String, Void, ArrayList<String>
     protected ArrayList<String> doInBackground(String... params) {
         ArrayList<String> list = new ArrayList<>();
 
-        if(params == null || params.length == 0){
+        if (params == null || params.length == 0) {
             return list;
         }
 
-        try {
-            Instagram instagram = MyInstagram.getInstance();
-            TagMediaFeed tagMediaFeed = instagram.getRecentMediaTags(params[0]);
-            List<MediaFeedData> mediaFeed = tagMediaFeed.getData();
-            for( MediaFeedData mediaFeedData : mediaFeed ){
-                ImageData imageData = mediaFeedData.getImages().getStandardResolution();
-                list.add(imageData.getImageUrl());
+        Instagram instagram = MyInstagram.getInstance();
+        List<MediaFeedData> mediaFeed;
+        for (String tag : params) {
+
+            try {
+                TagMediaFeed tagMediaFeed = instagram.getRecentMediaTags(tag);
+                mediaFeed = tagMediaFeed.getData();
+                for (MediaFeedData mediaFeedData : mediaFeed) {
+                    ImageData imageData = mediaFeedData.getImages().getStandardResolution();
+                    list.add(imageData.getImageUrl());
+                }
+            } catch (InstagramException e) {
+                e.printStackTrace();
             }
-        } catch (InstagramException e) {
-            e.printStackTrace();
         }
 
         return list;

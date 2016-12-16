@@ -68,17 +68,10 @@ public class SearchActivity extends AppCompatActivity {
                 String accessToken = uri.toString();
                 if (accessToken != null) {
                     accessToken = accessToken.replace(InstaViewConsts.REDIRECT_URI + "#access_token=", "");
-                    MyInstagram.init(new Token(accessToken, ""));
+                    MyInstagram.init(new Token(accessToken, null));
                 }
             }
         }
-
-        String[] urlArray = getResources().getStringArray(R.array.background_images);
-        ArrayList<String> paths = new ArrayList<>();
-        for (String url : urlArray) {
-            paths.add(url);
-        }
-        swipingImagesView.addImagePaths(paths);
     }
 
     @Override
@@ -102,17 +95,8 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void onSearch(String[] tags) {
-        SaadKeyboardUtil.hideKeyboard(this);
-
-        String[] urlArray = getResources().getStringArray(R.array.background_images);
-        ArrayList<String> paths = new ArrayList<>();
-        for (String url : urlArray) {
-            paths.add(url);
-        }
-        swipingImagesView.addImagePaths(paths);
-
-        //FetchPicturesTask fetchPicturesTask = new FetchPicturesTask(this);
-        //fetchPicturesTask.execute(tags);
+        FetchPicturesTask fetchPicturesTask = new FetchPicturesTask(this);
+        fetchPicturesTask.execute(tags);
     }
 
     private String[] parseTags(String query){
@@ -121,6 +105,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         String s = query.replaceAll("\\s+","");
+        s = s.replaceFirst("#", "");
         String[] tags = s.split("#");
         return tags;
     }
