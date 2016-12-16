@@ -1,16 +1,22 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="autoCompleteTextViewStyle">@style/autoCompleteStyle</item>
     </style>
 
     <style name="BackroundImageView">
         <item name="android:alpha">0.5</item>
         <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="autoCompleteStyle" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:popupBackground">@android:color/transparent</item>
     </style>
 
 </resources>
