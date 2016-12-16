@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
@@ -17,11 +18,8 @@ import android.widget.FrameLayout;
 
 import org.jinstagram.auth.model.Token;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import skalim.github.io.saadsandroid.util.SaadKeyboardUtil;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -60,18 +58,6 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         handleIntent(getIntent());
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            Uri uri = intent.getData();
-            if (uri != null) {
-                String accessToken = uri.toString();
-                if (accessToken != null) {
-                    accessToken = accessToken.replace(InstaViewConsts.REDIRECT_URI + "#access_token=", "");
-                    MyInstagram.init(new Token(accessToken, null));
-                }
-            }
-        }
     }
 
     @Override
@@ -81,15 +67,49 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            String[] tags = parseTags(query);
-            onSearch(tags);
+        if (intent != null) {
+            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+                // Start from search
+                String query = intent.getStringExtra(SearchManager.QUERY);
+                String[] tags = parseTags(query);
+                onSearch(tags);
 
-            if( tags.length > 0 ) {
-                SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-                        TagSearchRecentSuggestionsProvider.AUTHORITY, TagSearchRecentSuggestionsProvider.MODE);
-                suggestions.saveRecentQuery(query, null);
+                if( tags.length > 0 ) {
+                    SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                            TagSearchRecentSuggestionsProvider.AUTHORITY, TagSearchRecentSuggestionsProvider.MODE);
+                    suggestions.saveRecentQuery(query, null);
+                }
+
+                return;
+            }
+
+            String accessToken = intent.getStringExtra(MainActivity.PREF_KEY_ACCESS_TOKEN);
+            if( accessToken != null ){
+                // Start from existing session
+                MyInstagram.init(new Token(accessToken, null));
+                return;
+            }
+
+            Uri uri = intent.getData();
+            if (uri != null) {
+                accessToken = uri.toString();
+                if (accessToken != null) {
+                    // New login
+                    accessToken = accessToken.replace(InstaViewConsts.REDIRECT_URI + "#access_token=", "");
+                    MyInstagram.init(new Token(accessToken, null));
+                    SharedPreferences.Editor editor = getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor.putString(MainActivity.PREF_KEY_ACCESS_TOKEN, accessToken);
+                    editor.apply();
+                    return;
+                }
+
+                String error = uri.getQueryParameter("error");
+                if( error != null ) {
+                    // New login error occurred
+                    Intent i = new Intent(this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         }
     }
@@ -109,5 +129,4 @@ public class SearchActivity extends AppCompatActivity {
         String[] tags = s.split("#");
         return tags;
     }
-
 }
