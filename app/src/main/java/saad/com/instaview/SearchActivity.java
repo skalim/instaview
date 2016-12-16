@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.WindowInsetsCompat;
@@ -46,7 +47,6 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setIconifiedByDefault(false);
         searchView.setSubmitButtonEnabled(true);
 
-
         // Set margin for search field to allow for status bar
         ViewCompat.setOnApplyWindowInsetsListener(searchView, new OnApplyWindowInsetsListener() {
             @Override
@@ -79,7 +79,6 @@ public class SearchActivity extends AppCompatActivity {
             paths.add(url);
         }
         swipingImagesView.addImagePaths(paths);
-
     }
 
     @Override
@@ -91,12 +90,20 @@ public class SearchActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            onSearch(query);
+            String[] tags = parseTags(query);
+            onSearch(tags);
+
+            if( tags.length > 0 ) {
+                SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                        TagSearchRecentSuggestionsProvider.AUTHORITY, TagSearchRecentSuggestionsProvider.MODE);
+                suggestions.saveRecentQuery(query, null);
+            }
         }
     }
 
-    public void onSearch(String query) {
+    public void onSearch(String[] tags) {
         SaadKeyboardUtil.hideKeyboard(this);
+
         String[] urlArray = getResources().getStringArray(R.array.background_images);
         ArrayList<String> paths = new ArrayList<>();
         for (String url : urlArray) {
@@ -105,6 +112,17 @@ public class SearchActivity extends AppCompatActivity {
         swipingImagesView.addImagePaths(paths);
 
         //FetchPicturesTask fetchPicturesTask = new FetchPicturesTask(this);
-        //fetchPicturesTask.execute(query);
+        //fetchPicturesTask.execute(tags);
     }
+
+    private String[] parseTags(String query){
+        if( !query.contains("#") ) {
+            return new String[]{};
+        }
+
+        String s = query.replaceAll("\\s+","");
+        String[] tags = s.split("#");
+        return tags;
+    }
+
 }

@@ -58,6 +58,10 @@
                     </intent-filter>
                 </activity>
                 -->
+
+        <provider android:name=".TagSearchRecentSuggestionsProvider"
+            android:authorities="saad.com.instaview.TagSearchRecentSuggestionsProvider" />
+
     </application>
 
 </manifest>
