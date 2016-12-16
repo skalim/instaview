@@ -1,6 +1,8 @@
 package saad.com.instaview;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,6 +22,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements Animation.AnimationListener{
 
+    public static final String MY_PREFS_NAME = "InstaView";
+    public static final String PREF_KEY_ACCESS_TOKEN = "access_token";
+
     private LinkedList<String> queueBackgroundImages;
 
     @BindView(R.id.activity_main_image_view_background)
@@ -36,6 +41,16 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Check for existing session
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String accessToken = prefs.getString(PREF_KEY_ACCESS_TOKEN, null);
+        if (accessToken != null) {
+            Intent i = new Intent(this, SearchActivity.class);
+            i.putExtra(PREF_KEY_ACCESS_TOKEN, accessToken);
+            startActivity(i);
+            finish();
+        }
+
         ButterKnife.bind(this);
         queueBackgroundImages = new LinkedList<>();
         String[] urlArray = getResources().getStringArray(R.array.background_images);
