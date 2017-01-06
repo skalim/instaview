@@ -10,7 +10,7 @@
     tools:context="saad.com.instaview.SearchActivity">
 
 
-    <saad.com.instaview.SwipingImagesView
+    <io.github.skalim.swipeview.SwipingImagesView
         android:id="@+id/swiping_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

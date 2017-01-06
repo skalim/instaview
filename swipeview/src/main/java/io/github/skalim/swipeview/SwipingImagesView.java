@@ -1,4 +1,4 @@
-package saad.com.instaview;
+package io.github.skalim.swipeview;
 
 import android.app.Activity;
 import android.content.Context;

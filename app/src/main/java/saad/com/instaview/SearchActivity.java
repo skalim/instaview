@@ -20,6 +20,7 @@ import org.jinstagram.auth.model.Token;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.skalim.swipeview.SwipingImagesView;
 
 public class SearchActivity extends AppCompatActivity {
 
