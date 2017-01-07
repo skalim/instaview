@@ -1,6 +1,6 @@
 # InstaView
 ### Full screen image viewer for Instagram.
-<img src="https://lh5.googleusercontent.com/oeyDEx8I0qopbYpF6hs9tGLQ88xK5LoZtxY45pmz4pABPPPPSG5OlyV5iES4SbdMVbn3_KtpTZmSnRo=w3200-h1475-rw" align="left" height="526" width="300" >
+<img src="https://lh3.googleusercontent.com/QveoFSrfzwiKhotcjFKWbAWhbdqqjpS55FxPIc8dlMvyMvNOnnDhsYG439Vpxco9kjjep0roQSB-xGLyayYZ1mNxIgkktjOZOwuj5sVnpoioZSTWZ1-7dNHPMUAMbhepdQ0PLA" height="526" width="300" >
 
 ### SwipingImagesView
 To use the image viewer custom view in your project, add the following gradle dependency:
